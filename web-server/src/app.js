@@ -1,6 +1,6 @@
 // Command for live update starting application:
 // nodemon src/app.js
-
+const { geocode, forecast } = require('./utils')
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
@@ -44,10 +44,39 @@ app.get('/help', (req, res) => {
 
 // Routes HTTP GET requests to the specified path with the specified callback functions.
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: '16 degrees per day',
-        location: 'Prague'
-    })
+
+
+
+    if (!req.query.address) {
+        res.send({
+            error: "Address as parametr is required!"
+        })
+    } else {
+
+        geocode(req.query.address, (error, dataGeocode) => {
+            if (dataGeocode) {
+                //console.log(`The weather in ${data.placeName} is `)
+                forecast(dataGeocode.coordinates[0], dataGeocode.coordinates[1] , (error, dataForecast) => {
+                 if (dataForecast) {
+                    res.send({
+                        address: req.query.address,
+                        location: dataGeocode.location,
+                        forecast: dataForecast.summary
+                    })
+                 } else {
+                    res.send({
+                        error
+                    })
+                 }
+                })
+            } else {
+                res.send({
+                    error
+                })
+            }
+         })
+    }
+    
 })
 
 app.get('*', (req, res) => {

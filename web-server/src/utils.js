@@ -8,7 +8,6 @@ const geocode = (address, callback) => {
         if (data.features.length > 0) {
             const { coordinates } = data.features[0].geometry
             const { text, place_name } = data.features[0]
-            console.log
             callback(null, {coordinates, placeName: text, location: place_name})
         } else {
             callback("Can't find this location!", null)
@@ -28,7 +27,11 @@ fetch(url)
         if (data.error) {
             callback(data.error, null)
         } else {
-            callback(null, `${data.daily.data[0].summary} It is currently ${data.currently.temperature} degrees out. There is a ${data.currently.precipProbability}% chance of rain.`)
+            //callback(null, `${data.daily.data[0].summary} It is currently ${data.currently.temperature} degrees out. There is a ${data.currently.precipProbability}% chance of rain.`)
+            callback(null, {
+                summary: data.daily.data[0].summary, 
+                temperature: data.currently.temperature ,
+                precipProbability: data.currently.precipProbability})
         }
     })
     .catch(() => callback("Error!", null))

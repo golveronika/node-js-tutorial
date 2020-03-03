@@ -56,3 +56,29 @@ footer div p {
 .img-profile {
     height: 300px;
 }
+
+form label {
+    display: block;
+    padding: 20px 0;
+}
+
+form input,
+form button {
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 4px;
+    border-style: solid;
+    border: 1px solid gray;
+}
+
+form button {
+    background-color: #222222;
+    color: white;
+}
+
+#forecast_container {
+    margin: 20px 0;
+}
+#forecast_container p {
+    margin-bottom: 10px;
+}
