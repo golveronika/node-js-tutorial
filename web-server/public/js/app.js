@@ -6,7 +6,7 @@
      const value = event.target.elements[0].value;
 
      if (value) {
-        fetch(`http://localhost:3000/weather?address=${value}`)
+        fetch(`/weather?address=${value}`)
         .then((response) => {
             response.json().then((data) => {
                 console.log(data)
